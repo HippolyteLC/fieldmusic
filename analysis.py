@@ -112,6 +112,14 @@ def compute_spectral_descriptors(file_path, sr, output_dir, grain_size):
 # compute_spectral_descriptors(FILE_PATH, "metadata", 10)
 
 
+""" 
+AmpSlicerl, OnsetSlicer are Flucoma slicers from the CLI toolset. 
+AmpSlicer slices based on amplitude shifts in the spectral representation
+of the sound. 
+OnsetSlicer _
+
+"""
+
 class AmpSlicer:
     EXE = "fluid-ampslice"
     def __init__(
