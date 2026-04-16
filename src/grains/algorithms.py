@@ -117,7 +117,6 @@ def logistic_map_gs(input_path, output_file_dir, data, grain_indices,
         grain_buffer[grain_pos:grain_end] += grain*window
 
         channel = 1 if np.random.uniform() < 0.5 else 0 # uniform selection of channel assignment of amplitudes
-        # print(channel)
         x_n = r_start*x_n*(1-x_n)
         x_n_1 = r_start*x_n*(1-x_n)
         r_start += incr

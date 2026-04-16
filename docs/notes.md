@@ -1,3 +1,5 @@
+# Description thesis
+
 # Bullet points on Introduction
 - Everyone has access to field recordings,
 = Introduction to field recording and motivation in music production
