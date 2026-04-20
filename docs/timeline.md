@@ -2,9 +2,9 @@
 
 ### April (Setup)
 - OnStage registration completed (Dossier in "Execution Phase)
-- Coding environment set up and working
+- (Done) Coding environment set up and working 
 - Document summarising everything read so far
-- Finalised list of 3 grain methods and 3 algorithmic techniques
+- Finalised list of 3 grain methods and 3 algorithmic techniques 
 - Bullet-point outlines for Chapter 1 (Introduction) and Chapter 2 (Background)
 - First grain method implemented with one algorithmic technique applied
 
