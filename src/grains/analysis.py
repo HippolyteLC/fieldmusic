@@ -16,6 +16,7 @@ class AnalysisObject():
         self.len_input = len(self.y) if self.y else None
 
     def load_soundfile(self):
+        print(self.input)
         y, _ = af.read(self.input, self.sr)
         self.len_input = len(y)
         self.y = y

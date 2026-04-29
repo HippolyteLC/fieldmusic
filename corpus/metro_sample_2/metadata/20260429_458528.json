@@ -1,0 +1,41 @@
+{
+    "random_seed": 2027,
+    "sample_rate": 48000,
+    "input_file": "..\\..\\corpus\\metro_sample_2\\input.wav",
+    "n_clusters": 5,
+    "densities": [
+        0,
+        1,
+        4,
+        16
+    ],
+    "grain_sizes": [
+        48,
+        480,
+        960,
+        1920,
+        4800,
+        9600
+    ],
+    "n_iterations": 20,
+    "stereo_shifts": [
+        0,
+        3,
+        12,
+        48
+    ],
+    "delta_t": 0.46153846153846156,
+    "max_grains": 2,
+    "num_chans": 2,
+    "init_states_densities_sizes": [
+        11,
+        12
+    ],
+    "init_states_grain_cluster": [
+        4,
+        1
+    ],
+    "project": "markov_gs",
+    "poisson_change_rates": 4,
+    "window": "hanning"
+}
