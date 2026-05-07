@@ -6,6 +6,159 @@ import matplotlib.pyplot as plt
 import sklearn
 import librosa
 
+
+import os
+PATH = "..\..\corpus\\guitar_sample_2"
+sr = 48000
+
+class Analyzer():
+    """
+    Analysis object with Librosa. Loading with af. All descriptor methods utilize STFT representation
+    for faster computation it is provided globally. 
+    5 descriptor methods are added, some of which pertain to different descriptor categories as 
+    per Peeters' paper. 
+    Using specific 2048 n_fft and window length, and 512 hop length for good freq/ time resolution trade off
+    Conversion of these window values to the grain descriptor values is included
+    """
+
+    def __init__(self, path, sr):
+        self.path = path
+        self.sr=sr
+        self.input_path = os.path.normpath(path + "\\input.wav")
+        self.y = None
+        self.stft = None
+        self.loaded_y=False
+        self.loaded_stft=False
+
+    def compute_stft(self,
+        n_fft: int = 2048,
+        hop_length: int = 512,
+        win_length = None,
+        window = "hann",
+        center: bool = True,
+        pad_mode = "constant",
+        ):
+        if not self.loaded_y:
+            self.load_audio_data()
+            self.loaded_y=True
+        stft = librosa.stft(
+            y=self.y,
+            n_fft=n_fft,
+            hop_length=hop_length,
+            win_length=win_length,
+            window=window,
+            center=center,
+            pad_mode=pad_mode,
+        )
+        self.stft = np.abs(stft)
+
+    def load_audio_data(self):
+        y, _ = af.read(path=self.input_path, samplate=self.sr)
+        self.y = y
+    
+    def compute_zrc(self, n_fft=2048, hop_length=512):
+        """ 
+        Compute ZRC.
+        """
+        if not self.loaded_stft:
+            self.compute_stft()
+            self.loaded_stft=True
+        arr = librosa.feature.zero_crossing_rate(S=self.stft, n_fft=n_fft, hop_length=hop_length)
+        return arr[0] 
+
+    def compute_flatness(self, n_fft=2048, hop_length=512):
+        """ 
+        Compute spectral Flatness, standard Hanning window. 
+        """
+        if not self.loaded_stft:
+            self.compute_stft()
+            self.loaded_stft=True
+        arr = librosa.feature.spectral_flatness(S=self.stft, n_fft=n_fft, hop_length=hop_length)
+        return arr[0]
+    
+    def compute_rms(self, frame_length=2048, hop_length=512):
+        """ 
+        We use the Audio data 
+        """
+        if not self.loaded_stft:
+            self.compute_stft()
+            self.loaded_stft=True
+        arr = librosa.feature.rms(S=self.stft, frame_length=frame_length, hop_length=hop_length)
+        return arr[0]
+    
+    def compute_centroid(self, n_fft=2048, hop_length=512):
+        """ 
+        We use the Audio data 
+        """
+        if not self.loaded_stft:
+            self.compute_stft()
+            self.loaded_stft=True
+        arr = librosa.feature.spectral_centroid(S=self.stft, n_fft=n_fft, hop_length=hop_length)
+        return arr[0]
+    
+    def compute_rolloff(self, n_fft=2048, hop_length=512):
+        """ 
+        We use the Audio data 
+        """
+        if not self.loaded_stft:
+            self.compute_stft()
+            self.loaded_stft=True
+        arr = librosa.feature.spectral_rolloff(S=self.stft, n_fft=n_fft, hop_length=hop_length)
+        return arr[0]
+    
+    def convert_descriptor_arr(self, descriptor_arr):
+        """ 
+        Grain duration in seconds. 
+        Convert the descriptor arr to have descr values for each sample, can then compute per grain
+        descr value. 
+        """
+        if self.loaded_y:
+            incr = self.y.shape[-1]//descriptor_arr.shape[-1]
+            buffer = []
+            index = -1
+            for i in range(self.y.shape[-1]):    
+                if i % incr == 0:
+                    index+=1
+                if index == descriptor_arr.shape[-1]:
+                    break
+                buffer.append(descriptor_arr[index])
+            difference = self.y.shape[-1] - len(buffer)
+            if difference > 0: # padding the buffer 
+                buffer.extend([descriptor_arr[-1] for _ in range(difference)])
+            return buffer 
+           
+    def get_grain_descriptors(self, grain_duration, descriptor_arr):
+        grain_size = int(self.sr*grain_duration)
+        descriptor_y = self.convert_descriptor_arr(descriptor_arr)
+        grain_mean_descr = []
+        grain_std_descr = []
+        n_grains = int(len(descriptor_y)//grain_size)
+        for i in range(n_grains):
+            grain_dscr_mean = np.mean(descriptor_y[i*grain_size:(i+1)*grain_size])
+            grain_dscr_std = np.std(descriptor_y[i*grain_size:(i+1)*grain_size])
+            grain_mean_descr.append(grain_dscr_mean)
+            grain_std_descr.append(grain_dscr_std)
+        return grain_mean_descr, grain_std_descr, descriptor_y
+    
+    def n_grains(self, grain_duration):
+        grain_size = int(self.sr*grain_duration)
+        if not self.loaded_y:
+            self.load_audio_data()
+        return int(len(self.y)//grain_size)
+
+def show_scatter_plt(x, y, x_label, y_label, title, alpha=0.7):
+    """ 
+    Show scatter plot for two descriptor arrays. Add title, x and y labels. 
+    """
+    plt.figure(figsize=(10, 7))
+    plt.scatter(x, y, alpha=alpha)
+    plt.ylabel(x_label)
+    plt.xlabel(y_label)
+    plt.title(title)
+    plt.grid(True, linestyle='--', alpha=alpha)
+    plt.show()
+    
+
 def get_spectrogram(data, y_axis, x_axis, sr, title=None):
     D = librosa.amplitude_to_db(np.abs(librosa.stft(data)), ref=np.max)
     fig, ax = plt.subplots()
@@ -14,7 +167,16 @@ def get_spectrogram(data, y_axis, x_axis, sr, title=None):
     ax.label_outer()
     fig.colorbar(img, ax=ax, format="%+2.f dB")
 
+
+
+### OBSOLETE FUNCTIONS AND CLASSES BELOW
+# --------------------------------------------------------------------------#
+
 class AnalysisObject():
+    """ 
+    Analysis object with audio flux
+    """
+
     def __init__(self, dir, sr):
         self.dir = dir
         self.sr = sr

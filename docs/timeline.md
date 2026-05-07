@@ -1,5 +1,6 @@
 # Timeline
 
+___
 ### April (Setup)
 - OnStage registration completed (Dossier in "Execution Phase)
 - (Done) Coding environment set up and working 
@@ -8,6 +9,7 @@
 - Bullet-point outlines for Chapter 1 (Introduction) and Chapter 2 (Background)
 - First grain method implemented with one algorithmic technique applied
 
+___
 ### May (Implementation + Drafting)
 - All grain methods implemented
 - All algorithmic techniques implemented
@@ -16,11 +18,13 @@
 - Draft of chapter 3 (Methodology)
 - Draft of chapter 4 (Results) and Chapter 5 (Discussion)
 
+___
 ### Mid-June (Writing + Review)
 - Complete rough draft
 - Second reader confirmed
 - Defence room booked
 
+___
 ### July (Finalise)
 - Final polished thesis
 - Defence presentation ready
