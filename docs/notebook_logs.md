@@ -36,5 +36,6 @@ Binary recurrence plots are an option. Function that maps to 1 if a prior frime 
 Using a similar sample can result in very similar outputs if the same parametres are set. I used two different guitar recordings of mine, on the same guitar, but different voicings. The outputs with the same parametres sound very similar to the ear (TODO: provide similarity metric perhaps?). 
 **How viable are markov chain models at creating novel outputs from similar inputs?** The issue here is that the grain distribution of one input of a 'guitar' will be extremely similar to the grain distribution of another 'guitar' if similar sound events happen throughout the samples. Here perhaps an idea is to find the most novel sound events, the grains farthest from any cluster of grains, and perhaps focus on synthesizing with these and comparing how similar these outputs are. 
 
+
 <!-- TODO: do a case study of the two guitar input samples and compare input and output similarities.  -->
 <!-- TODO: add grain scatterplot saving for the different inputs. Compare differences between plots of different inputs. -->

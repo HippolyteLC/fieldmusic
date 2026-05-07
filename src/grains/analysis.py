@@ -89,10 +89,21 @@ class AnalysisObject():
     def display_scatter_plot(self, arr_1, arr_2):
         plt.figure(figsize=(10, 7))
         plt.scatter(arr_1, arr_2, alpha=0.7)
-        # plt.ylabel()
-        # plt.xlabel("Spectral Root Mean Square")
+        plt.ylabel("Spectral Flatness")
+        plt.xlabel("Spectral Root Mean Square")
         plt.grid(True, linestyle='--', alpha=0.6)
         plt.show()
+    
+    def save_scatter_plot(self, arr_1, arr_2):
+        y_label = "Spectral Flatness"
+        x_label = "Spectral Root Mean Square"
+        plt.figure(figsize=(10, 7))
+        plt.scatter(arr_1, arr_2, alpha=0.7)
+        plt.ylabel(y_label)
+        plt.xlabel(x_label)
+        plt.grid(True, linestyle='--', alpha=0.6)
+        save_title = f""
+        plt.savefig()
 
     def get_dict_clusters(self, n_clusters, arr_1, arr_2):
         kmeans, _, _ = self.get_cluster_obj(self, n_clusters, arr_1, arr_2)
@@ -102,15 +113,7 @@ class AnalysisObject():
             dict_clusters[lab].append(idx)
         return dict_clusters
 
-dir = "..\..\corpus\metro_sample_1"
 
-sr = 48000
-obj = AnalysisObject(dir,sr=sr)
-obj.dir
-y, sr = librosa.load(path=obj.input, sr=obj.sr)
-print(obj.data)
-obj.load_soundfile()
-print(obj.exists())
 
 
 def compute_spectral_descriptors(file_path, sr, output_dir, grain_size):
