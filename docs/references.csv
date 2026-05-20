@@ -1,4 +1,4 @@
-reference, link, why, notes,,,,,,,,,
+reference, link, why, notes
 "@book{roads2004microsound,
   title={Microsound},
   author={Roads, Curtis},
@@ -73,4 +73,4 @@ tically controlled settings",,,,,,,,,
   author={Bitton, Adrien and Esling, Philippe and Harada, Tatsuya},
   journal={arXiv preprint arXiv:2008.01393},
   year={2020}
-}", https://doi.org/10.48550/arXiv.2008.01393," ""Paper on Neural granular synthesis"," for producing novel sounds"""," ""Datasets with short audio material from which the latent space is derived: *10 animals*", *8 Drums*," *Studio-on-Line*""",,,,,,
+}", https://doi.org/10.48550/arXiv.2008.01393,"Paper on Neural granular synthesis for producing novel sounds","Datasets with short audio material from which the latent space is derived: *10 animals*, *8 Drums*, *Studio-on-Line*"
