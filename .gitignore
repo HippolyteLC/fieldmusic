@@ -5,3 +5,5 @@
 /corpus/*/output/*.mp3
 /audio_demo/*.wav
 /audio_demo/*.mp3
+/docs/*.pdf
+/docs/*/*.pdf
